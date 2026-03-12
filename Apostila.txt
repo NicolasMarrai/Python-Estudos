@@ -1,0 +1,20 @@
+Programando em PYTHON - DJANGO
+
+Desativar o Ambiente Virtual: deactivate (Desativa o ambiente virtual atual).
+Criar um Novo Ambiente Virtual: python -m venv venv (Cria um novo ambiente virtual chamado .venv).
+Ativar o Ambiente Virtual:
+Para Windows: .venv\Scripts\activate
+
+Instalar o Django:
+pip install django (Instala o Django no ambiente virtual).
+
+Gerar um Arquivo de Dependências:
+pip freeze > requirements.txt
+
+Criar um Novo Projeto Django:
+django-admin startproject hello-django: Inicializa um novo projeto Django chamado "hello-django".
+
+Executar o Servidor de Desenvolvimento:
+python manage.py runserver: Inicia o servidor de desenvolvimento do Django.
+
+Esses comandos são fundamentais para a configuração e execução de projetos Django, e são especialmente úteis para iniciantes que estão aprendendo a trabalhar com essa tecnologia.
