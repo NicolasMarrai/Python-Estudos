@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Deletar Nota</title>
+  </head>
+  <body>
+    <h1>Excluir Nota</h1>
+
+    <p>Tem certeza que deseja excluir a nota:</p>
+
+    <strong>{{ nota.titulo }}</strong>
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <br /><br />
+
+      <button type="submit">Confirmar exclusão</button>
+    </form>
+
+    <br />
+
+    <a href="/">Cancelar</a>
+  </body>
+</html>

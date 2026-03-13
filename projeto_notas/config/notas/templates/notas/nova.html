@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Nova Nota</title>
+  </head>
+  <body>
+    <h1>Criar Nova Nota</h1>
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <label>Título:</label>
+      <br />
+      <input type="text" name="titulo" required />
+
+      <br /><br />
+
+      <label>Conteúdo:</label>
+      <br />
+      <textarea name="conteudo" required></textarea>
+
+      <br /><br />
+
+      <label>
+        <input type="checkbox" name="importante" />
+        Nota importante
+      </label>
+
+      <br /><br />
+
+      <button type="submit">Salvar</button>
+    </form>
+
+    <br />
+
+    <a href="/">Voltar para lista</a>
+  </body>
+</html>
