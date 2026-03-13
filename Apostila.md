@@ -76,3 +76,17 @@ PUT: Serve para atualizar todos os campos de um registro. O professor destacou q
 PATCH: Utilizado para atualizar apenas parte de um registro. Isso permite que o usuário envie apenas os campos que foram alterados.
 
 DELETE: Remove um registro do banco de dados.
+
+Nesta aula, aprendemos a criar uma funcionalidade para que usuários comuns possam adicionar novas tarefas em um sistema de gerenciamento de tarefas, sem precisar acessar o Django Admin. O fluxo da aula foi o seguinte:
+
+Criação da View: Implementamos uma função chamada novaTarefa que verifica se a requisição é do tipo POST. Se for, ela extrai os dados do título e descrição da tarefa do formulário, cria uma nova tarefa no banco de dados e redireciona o usuário para a página de listagem de tarefas. Se a requisição não for POST, a função renderiza o template do formulário para criar uma nova tarefa.
+
+Configuração da URL: Adicionamos uma nova URL para acessar a função novaTarefa, garantindo que ela esteja acessível através do navegador.
+
+Criação do Formulário: No template nova.html, criamos um formulário que inclui campos para o título e a descrição da tarefa. Também incluímos um token CSRF para segurança, que é necessário para requisições POST no Django.
+
+Navegação: Adicionamos um link na página de listagem de tarefas para que os usuários possam acessar facilmente a página de criação de novas tarefas.
+
+Testes: Por fim, testamos a funcionalidade criando novas tarefas e verificando se elas apareciam corretamente na lista.
+
+A aula enfatizou a importância de manter a segurança nas requisições e a organização do código, além de preparar o terreno para as próximas aulas, onde abordaremos a edição e remoção de tarefas.
