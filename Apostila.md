@@ -1,114 +1,247 @@
-Programando em PYTHON - DJANGO
+# Apostila do Projeto Django de Tarefas
 
-Desativar o Ambiente Virtual: deactivate (Desativa o ambiente virtual atual).
-Criar um Novo Ambiente Virtual: python -m venv venv (Cria um novo ambiente virtual chamado .venv).
-Ativar o Ambiente Virtual:
-Para Windows: .venv\Scripts\activate
+## 1. Objetivo do que eu construí
 
-Instalar o Django:
-pip install django (Instala o Django no ambiente virtual).
+Neste projeto, eu desenvolvi uma aplicação web simples de lista de tarefas (to-do list) com Django, com as operações de:
 
-Gerar um Arquivo de Dependências:
+- criar tarefa
+- listar tarefas
+- editar tarefa
+- deletar tarefa
+- marcar tarefa como finalizada
+
+Além de implementar o CRUD, eu também aprendi a estruturar o projeto, trabalhar com templates HTML, configurar ambiente virtual, usar migrações e corrigir erros comuns de desenvolvimento.
+
+## 2. Estrutura do projeto
+
+Eu organizei o projeto principal em uma pasta chamada todo_project, contendo:
+
+- manage.py (comandos do Django)
+- pasta do projeto Django (configurações globais)
+- app tarefas (regra de negócio e telas de tarefas)
+- db.sqlite3 (banco de dados local)
+- venv local do projeto
+
+Conceitos importantes:
+
+- Projeto Django: contém configurações globais (settings, urls, wsgi, asgi).
+- App Django: módulo com uma responsabilidade específica. Neste caso, o app tarefas cuida de tudo relacionado a tarefas.
+
+## 3. Ambiente virtual e instalação
+
+### 3.1. Criação e ativação do ambiente
+
+No Windows, o processo correto é:
+
+```powershell
+python -m venv venv
+venv\Scripts\activate
+```
+
+Para sair do ambiente virtual:
+
+```powershell
+deactivate
+```
+
+### 3.2. Instalação do Django
+
+Com o ambiente virtual ativo:
+
+```powershell
+pip install django
+```
+
+Para salvar dependências:
+
+```powershell
 pip freeze > requirements.txt
+```
 
-Criar um Novo Projeto Django:
-django-admin startproject hello-django: Inicializa um novo projeto Django chamado "hello-django".
+### 3.3. Aprendizado importante sobre ambiente
 
-Executar o Servidor de Desenvolvimento:
-python manage.py runserver: Inicia o servidor de desenvolvimento do Django.
+Durante o desenvolvimento, eu encontrei um problema de ambiente Python por ter mais de um interpretador disponível no Windows.
 
-Esses comandos são fundamentais para a configuração e execução de projetos Django, e são especialmente úteis para iniciantes que estão aprendendo a trabalhar com essa tecnologia.
+- Um interpretador não tinha o Django instalado.
+- O projeto estava funcionando com o venv dentro da pasta do projeto.
 
-Projeto Django:
-é a estrutura principal que contém as configurações globais
-App Django:
-é um módulo que executa uma função específica, como gerenciar tarefas ou usuários.
+Lição prática:
 
-Instalação de Apps: É crucial incluir novos aplicativos na lista INSTALLED_APPS, pois, se não estiverem listados, o Django não os reconhecerá.
+- sempre executar comandos do Django com o Python do venv correto do projeto
+- evitar misturar python, python3 e outros ambientes sem confirmar qual está ativo
 
-Banco de Dados: O Django utiliza o SQLite 3 por padrão, ideal para testes e desenvolvimento. Futuramente, será integrado o PostgreSQL, um banco de dados relacional.
+## 4. Configuração inicial do Django
 
-Configurações de Idioma e Fuso Horário: É importante definir o código de linguagem e o fuso horário, sugerindo o uso de "pt-BR" e "America/Sao_Paulo".
+Com o projeto criado, os comandos principais usados foram:
 
-Templates: O settings.py também configura a localização dos templates HTML. O professor mencionou que, nas próximas aulas, será abordada a integração com React e React TypeScript.
+```powershell
+python manage.py runserver
+python manage.py makemigrations
+python manage.py migrate
+python manage.py check
+```
 
-Caminhos e Diretórios: O BASE_DIR serve como referência para definir os caminhos dos diretórios do projeto, facilitando a organização.
+O que cada comando faz:
 
-1. Padrão MTV (Model, Template, View):
-   Model: Interage com o banco de dados, realizando consultas e manipulações.
-   Template: Interface com o usuário.
-   View: Contém a lógica do projeto e conecta Models e Templates.
-   ORM (Object Relational Mapping): Facilita a interação entre Models e o banco de dados, permitindo o uso de classes em vez de SQL puro.
+- runserver: sobe o servidor local.
+- makemigrations: gera arquivos de migração com mudanças dos models.
+- migrate: aplica as migrações no banco.
+- check: valida configurações e integridade do projeto.
 
-2. Criação da Tabela "tarefa":
-   Colunas da tabela:
-   Título: models.CharField(max_length=100) - Permite até 100 caracteres.
-   Descrição: models.TextField(blank=True) - Campo de texto opcional.
-   Finalizado: models.BooleanField(default=False) - Indica se a tarefa está finalizada (padrão: não finalizada).
-   Criado em: models.DateTimeField(auto_now_add=True) - Armazena a data de criação automaticamente.
+## 5. Modelagem da aplicação
 
-3. Processo de Migrações:
-   Gerar migração: python manage.py makemigrations - Cria um arquivo com as instruções para criar a tabela.
-   Executar migração: python manage.py migrate - Cria a tabela no banco de dados.
+No app tarefas, foi criado o model Tarefa com os campos:
 
-   Os principais tópicos abordados foram:
+- titulo: texto curto obrigatório (CharField)
+- descricao: texto livre opcional (TextField com blank=True)
+- finalizado: status booleano (BooleanField)
+- criado_em: data/hora automática de criação (DateTimeField auto_now_add=True)
 
-Criação de um Super-Usuário: Aprendemos a criar um super-usuário através do terminal, utilizando o comando python manage.py createsuperuser, onde inserimos um e-mail e uma senha.
+Com isso, o Django ORM passou a mapear essa classe para uma tabela no SQLite automaticamente após as migrações.
 
-Acesso ao Django Admin: Após iniciar o servidor com python manage.py runserver, acessamos a interface administrativa pelo navegador em localhost:8000/admin, onde inserimos as credenciais do super-usuário.
+## 6. Painel administrativo
 
-Registro de Modelos: Vimos como registrar o modelo "tarefa" no Django Admin. No arquivo admin.py, importamos o modelo e utilizamos admin.site.register(Tarefa) para torná-lo disponível na interface.
+Para administração inicial dos dados, o fluxo foi:
 
-Gerenciamento de Tarefas: Aprendemos a adicionar, editar e visualizar tarefas diretamente no Django Admin. A interface permite criar novas tarefas e listar as existentes de forma simples.
+1. criar superusuário
+2. acessar /admin
+3. registrar o model Tarefa no admin.py
+4. criar e visualizar tarefas pelo painel
 
-Personalização da Listagem: A aula também abordou como personalizar a tabela de listagem no Django Admin. Utilizando admin.register(Tarefa) e criando uma classe de configuração, podemos definir quais colunas exibir (como título e status de finalização) e adicionar um campo de busca.
+Também foi entendido que o Django Admin permite filtros, busca e customização da listagem.
 
-Funcionalidades Avançadas: O Django Admin permite filtrar tarefas por status e realizar buscas rápidas, facilitando a administração dos dados.
+## 7. Implementação do CRUD no app tarefas
 
-Os principais métodos HTTP discutidos foram:
+### 7.1. Listagem
 
-GET: Utilizado para buscar dados. Por exemplo, ao acessar uma página ou listar registros, o método GET é empregado. Ele não altera dados, apenas exibe informações.
+- view: listarTarefas
+- objetivo: buscar todas as tarefas no banco e renderizar o template de listagem
 
-POST: Usado para enviar dados e criar novos registros. O professor deu o exemplo de criar uma nova tarefa, onde, ao clicar em salvar, uma requisição POST é feita.
+### 7.2. Criação
 
-PUT: Serve para atualizar todos os campos de um registro. O professor destacou que, ao usar o PUT, é necessário enviar todos os campos, mesmo aqueles que não foram alterados, para evitar que sejam apagados ou deixados como nulos.
+- view: novaTarefa
+- método GET: mostra formulário
+- método POST: recebe titulo e descricao, cria no banco e redireciona
 
-PATCH: Utilizado para atualizar apenas parte de um registro. Isso permite que o usuário envie apenas os campos que foram alterados.
+### 7.3. Edição
 
-DELETE: Remove um registro do banco de dados.
+- view: editarTarefa
+- busca tarefa por ID com get_object_or_404
+- método GET: abre formulário preenchido
+- método POST: atualiza dados da tarefa e redireciona
 
-Nesta aula, aprendemos a criar uma funcionalidade para que usuários comuns possam adicionar novas tarefas em um sistema de gerenciamento de tarefas, sem precisar acessar o Django Admin. O fluxo da aula foi o seguinte:
+### 7.4. Exclusão
 
-Criação da View: Implementamos uma função chamada novaTarefa que verifica se a requisição é do tipo POST. Se for, ela extrai os dados do título e descrição da tarefa do formulário, cria uma nova tarefa no banco de dados e redireciona o usuário para a página de listagem de tarefas. Se a requisição não for POST, a função renderiza o template do formulário para criar uma nova tarefa.
+- view: deletarTarefa
+- remove a tarefa pelo ID e redireciona para a listagem
 
-Configuração da URL: Adicionamos uma nova URL para acessar a função novaTarefa, garantindo que ela esteja acessível através do navegador.
+## 8. Templates HTML criados
 
-Criação do Formulário: No template nova.html, criamos um formulário que inclui campos para o título e a descrição da tarefa. Também incluímos um token CSRF para segurança, que é necessário para requisições POST no Django.
+No app tarefas, eu trabalhei com:
 
-Navegação: Adicionamos um link na página de listagem de tarefas para que os usuários possam acessar facilmente a página de criação de novas tarefas.
+- listar.html
+- nova.html
+- editar.html
 
-Testes: Por fim, testamos a funcionalidade criando novas tarefas e verificando se elas apareciam corretamente na lista.
+Pontos aplicados nos formulários:
 
-A aula enfatizou a importância de manter a segurança nas requisições e a organização do código, além de preparar o terreno para as próximas aulas, onde abordaremos a edição e remoção de tarefas.
+- uso de method="post"
+- inclusão de token CSRF ({% csrf_token %})
+- preenchimento de valores existentes na edição
+- link de navegação para voltar à listagem
 
-Os principais pontos discutidos foram:
+## 9. Métodos HTTP usados na prática
 
-Edição de Tarefas:
+No projeto, os principais foram:
 
-A view de edição utiliza o método GET para buscar a tarefa pelo ID. Se a tarefa não existir, retorna um erro 404.
-Se a requisição for do tipo POST, as informações da tarefa são atualizadas no banco de dados, incluindo o campo "finalizado", que é um checkbox.
-Após a edição, o usuário é redirecionado para a página de listagem de tarefas.
-Criação da View e Template:
+- GET: abrir páginas e listar dados
+- POST: enviar formulário para criar ou atualizar
 
-O professor demonstrou como criar a view editar_tarefa e o template editar.html, aproveitando a estrutura do formulário de criação, mas adicionando o valor atual das tarefas nos campos de título e descrição.
-Exclusão de Tarefas:
+Também estudei conceitualmente:
 
-Foi criada uma nova view deletar_tarefa, que também utiliza o ID da tarefa para realizar a exclusão.
-O redirecionamento após a exclusão leva o usuário de volta à listagem de tarefas.
-Atualização do Template de Listagem:
+- PUT: atualização completa
+- PATCH: atualização parcial
+- DELETE: remoção
 
-O professor mostrou como adicionar botões de editar e excluir nas tarefas listadas, utilizando formulários para a exclusão e links para a edição.
-Testes Práticos:
+## 10. Erros reais que aconteceram e como corrigi
 
-Ao final, o professor fez testes práticos, editando e excluindo tarefas, demonstrando que as funcionalidades estavam funcionando corretamente.
-A aula concluiu o módulo, preparando os alunos para o próximo, que abordará modelos e a integração com bancos de dados relacionais, especificamente o PostgreSQL.
+Esta foi uma parte importante do aprendizado prático.
+
+### 10.1. Erro no template: endif inválido
+
+Problema:
+
+- TemplateSyntaxError informando tag endif inválida no editar.html
+
+Causa:
+
+- sintaxe da tag if/endif fora do padrão do template engine do Django
+
+Correção:
+
+- padronização para {% if tarefa.finalizado %} ... {% endif %}
+
+### 10.2. Erro no formulário: campo titulo não era enviado
+
+Problema:
+
+- edição não enviava o título corretamente
+
+Causa:
+
+- atributo digitado errado no input (nam em vez de name)
+
+Correção:
+
+- ajustar para name="titulo"
+
+### 10.3. Erro de validação do BooleanField
+
+Problema:
+
+- ValidationError: valor on deve ser True ou False
+
+Causa:
+
+- checkbox enviado como string on e salvo diretamente no campo booleano
+
+Correção aplicada na view:
+
+```python
+tarefa.finalizado = 'finalizado' in request.POST
+```
+
+Por que funciona:
+
+- se checkbox estiver marcado, o campo finalizado vem no POST
+- se estiver desmarcado, o campo não vem
+- resultado final vira True ou False corretamente
+
+## 11. Fluxo completo de uso da aplicação
+
+1. iniciar servidor com runserver
+2. abrir listagem de tarefas
+3. criar nova tarefa pelo formulário
+4. editar título, descrição e status de finalização
+5. excluir tarefa quando necessário
+
+Esse fluxo confirma o CRUD funcionando de ponta a ponta.
+
+## 12. O que eu aprendi com este projeto
+
+- estrutura base de um projeto Django
+- diferença entre projeto e app
+- padrão MTV e papel de cada camada
+- uso de ORM para persistência em SQLite
+- criação de views baseadas em função
+- integração entre URLs, views, templates e models
+- tratamento de erros reais de template, formulário e tipo de dado
+- importância de usar o ambiente virtual correto no Windows
+
+## 13. Próximos passos sugeridos
+
+- refinar interface visual com CSS
+- criar validações mais completas de formulário
+- adicionar testes automatizados
+- evoluir banco de SQLite para PostgreSQL
+- futuramente expor API para integração com front-end React
