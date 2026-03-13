@@ -90,3 +90,25 @@ Navegação: Adicionamos um link na página de listagem de tarefas para que os u
 Testes: Por fim, testamos a funcionalidade criando novas tarefas e verificando se elas apareciam corretamente na lista.
 
 A aula enfatizou a importância de manter a segurança nas requisições e a organização do código, além de preparar o terreno para as próximas aulas, onde abordaremos a edição e remoção de tarefas.
+
+Os principais pontos discutidos foram:
+
+Edição de Tarefas:
+
+A view de edição utiliza o método GET para buscar a tarefa pelo ID. Se a tarefa não existir, retorna um erro 404.
+Se a requisição for do tipo POST, as informações da tarefa são atualizadas no banco de dados, incluindo o campo "finalizado", que é um checkbox.
+Após a edição, o usuário é redirecionado para a página de listagem de tarefas.
+Criação da View e Template:
+
+O professor demonstrou como criar a view editar_tarefa e o template editar.html, aproveitando a estrutura do formulário de criação, mas adicionando o valor atual das tarefas nos campos de título e descrição.
+Exclusão de Tarefas:
+
+Foi criada uma nova view deletar_tarefa, que também utiliza o ID da tarefa para realizar a exclusão.
+O redirecionamento após a exclusão leva o usuário de volta à listagem de tarefas.
+Atualização do Template de Listagem:
+
+O professor mostrou como adicionar botões de editar e excluir nas tarefas listadas, utilizando formulários para a exclusão e links para a edição.
+Testes Práticos:
+
+Ao final, o professor fez testes práticos, editando e excluindo tarefas, demonstrando que as funcionalidades estavam funcionando corretamente.
+A aula concluiu o módulo, preparando os alunos para o próximo, que abordará modelos e a integração com bancos de dados relacionais, especificamente o PostgreSQL.

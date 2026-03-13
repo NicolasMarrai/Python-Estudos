@@ -10,8 +10,22 @@
     <ul>
       {% for tarefa in tarefas %}
       <li>
-        {{ tarefa.titulo }} - {{ tarefa.descricao }} - Status: {{
-        tarefa.finalizado }}
+        <strong> {{ tarefa.titulo }} </strong>
+        -
+        <p>{{ tarefa.descricao }}</p>
+
+        {% if tarefa.finalizado %} Status: Finalizada {% else %} Status:
+        Pendente {% endif %}
+        <a href="{% url 'editarTarefa' tarefa.id %}">Editar</a>
+
+        <form
+          method="POST"
+          action="{% url 'deletarTarefa' tarefa.id %}"
+          style="display: inline"
+        >
+          {% csrf_token %}
+          <button type="submit" style="color: red">Excluir</button>
+        </form>
       </li>
       {% endfor %}
     </ul>
